@@ -14,7 +14,7 @@ public class BasePanel extends JPanel {
 
     public BasePanel() {
         //construct preComponents
-        String[] storeBoxItems = {"Sucursal1", "Sucursal2"};
+        String[] storeBoxItems = {"Sucursal 1", "Sucursal 2", "Sucursal 3", "Sucursal 4"};
 
         //construct components
         storeBox = new JComboBox(storeBoxItems);

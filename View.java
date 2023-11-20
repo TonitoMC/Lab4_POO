@@ -7,7 +7,6 @@ public class View extends JFrame {
     selectionPanel selectionPanel;
     PremiumPanel premiumPanel;
     BasePanel basePanel;
-
     public View(){
         loginPanel = new loginPanel();
         selectionPanel = new selectionPanel();

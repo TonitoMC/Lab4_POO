@@ -10,7 +10,12 @@ public Model(){
     loanList = new ArrayList<Loan>();
 }
     public void setStore(String store){
-    loginUser.setStore(store);
+    ArrayList<BaseUser> baseUserList = getBaseUserList();
+    for (BaseUser user : baseUserList){
+        if (user.getUsername().equals(loginUser.getUsername())){
+            user.setStore(store);
+        }
+    }
     }
     public void readCSV(){
         String line;
@@ -42,7 +47,7 @@ public Model(){
                     String currentDeliveryTime = tempList.get(2);
                     String currentDeliveryAddress = tempList.get(3);
                     ArrayList<String> itemList = new ArrayList<String>();
-                    for (int i = 5; i < tempList.size() + 5; i++){
+                    for (int i = 5; i < tempList.size(); i++){
                         itemList.add(tempList.get(i));
                     }
                     loanList.add(new PremiumLoan(currentUsername, currentDeliveryTime, currentDeliveryAddress, itemList));
@@ -50,7 +55,7 @@ public Model(){
                     String currentUsername = tempList.get(1);
                     String currentStore = tempList.get(2);
                     ArrayList<String> itemList = new ArrayList<String>();
-                    for (int i  = 4; i < tempList.size() + 4; i++){
+                    for (int i  = 4; i < tempList.size(); i++){
                         itemList.add(tempList.get(i));
                     }
                     loanList.add(new BaseLoan(currentUsername, currentStore, itemList));
@@ -60,7 +65,51 @@ public Model(){
             e.printStackTrace();
         }
     }
-
+    public void writeCSV(){
+    ArrayList <PremiumUser> premiumUserList = getPremiumUserList();
+    ArrayList<BaseUser> baseUserList = getBaseUserList();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"))) {
+            for (PremiumUser currentPremiumUser : premiumUserList){
+                bw.write("y," + currentPremiumUser.getUsername() + "," + currentPremiumUser.getPassword() + ","
+                        + currentPremiumUser.getDeliveryTime() + "," + currentPremiumUser.getDeliveryAddress() + ","
+                + currentPremiumUser.getDeliveryTime() + "," + currentPremiumUser.getBookNumber() + ",");
+                bw.newLine();
+            }
+            for (BaseUser currentBaseUser : baseUserList){
+                bw.write("n," + currentBaseUser.getUsername() + "," + currentBaseUser.getPassword() + "," + currentBaseUser.getStore() +
+                        "," + currentBaseUser.getBookNumber() + ",");
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"))) {
+            for (Loan currentLoan : loanList){
+                bw.write(currentLoan.getString());
+                bw.newLine();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public ArrayList<PremiumUser> getPremiumUserList(){
+    ArrayList<PremiumUser> tempList = new ArrayList<>();
+    for (User currentUser: userList){
+        if (currentUser.getClass().getSimpleName().equals("PremiumUser")){
+            tempList.add((PremiumUser) currentUser);
+        }
+    }
+    return tempList;
+    }
+    public ArrayList<BaseUser> getBaseUserList(){
+    ArrayList<BaseUser> tempList = new ArrayList<>();
+    for (User currentUser : userList){
+        if (currentUser.getClass().getSimpleName().equals("BaseUser")){
+            tempList.add((BaseUser) currentUser);
+        }
+    }
+    return tempList;
+    }
 public boolean isPremium(){
     return loginUser.getPremium();
 }

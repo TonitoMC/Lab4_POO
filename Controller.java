@@ -13,6 +13,7 @@ public class Controller implements ActionListener {
         this.mainModel = mainModel;
         this.mainView = mainView;
         mainView.addActionListener(this);
+        mainModel.readCSV();
     }
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == mainView.getLoginButton()){
@@ -31,8 +32,10 @@ public class Controller implements ActionListener {
                 if (mainModel.signup(mainView.getLoginUsername(), mainView.getLoginPassword(), mainView.signupPremium())) {
                     if (mainView.signupPremium()) {
                         mainView.showPremiumPanel();
+                        mainModel.writeCSV();
                     } else {
                         mainView.showBasePanel();
+                        mainModel.writeCSV();
                     }
                 } else {
                     mainView.popUp("Pruebe otro nombre de usuario");
@@ -67,6 +70,7 @@ public class Controller implements ActionListener {
         }
         if (e.getSource() == mainView.getConfirmStoreButton()){
             mainModel.setStore(mainView.getDesiredStore());
+            mainModel.writeCSV();
         }
     }
 }

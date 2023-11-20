@@ -39,6 +39,12 @@ public class BaseUser implements User{
     public void giveBack(){
 
     }
+    public String getStore(){
+        return store;
+    }
+    public int getBookNumber(){
+        return bookNumber;
+    }
     public String getPassword() {
         return password;
     }

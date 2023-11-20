@@ -13,6 +13,18 @@ public class PremiumUser implements User{
         this.password = password;
         this.bookNumber = 0;
     }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public int getBookNumber() {
+        return bookNumber;
+    }
+    public String getDeliveryTime(){
+        return deliveryTime;
+    }
+
     public PremiumUser(String username, String password, String deliveryTime, String deliveryAddress, int bookNumber){
         this.username = username;
         this.password = password;

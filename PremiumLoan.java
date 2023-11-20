@@ -22,11 +22,12 @@ public class PremiumLoan implements Loan{
         this.deliveryAddress = deliveryAddress;
         this.returnIn = 30;
     }
-    public String getString(String user, ArrayList<String> bookList, ArrayList<String> magazineList, String deliveryTime, String deliveryAddress){
-        return "s";
-    }
     @Override
     public String getString() {
-        return null;
+        StringBuilder builder = new StringBuilder();
+        for (String item : itemList){
+            builder.append(item).append(",");
+        }
+        return "y," + user + "," + deliveryTime + "," + deliveryAddress + "," + returnIn + "," + builder.toString();
     }
 }
